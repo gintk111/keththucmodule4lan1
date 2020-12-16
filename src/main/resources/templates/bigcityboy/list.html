@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="master::admin-head"></th:block>
+<style>
+    .details-left {
+        width: 25%;
+    }
+</style>
+<script>
+    function details(e) {
+        let id = e.getAttribute("href");
+        $.ajax({
+            type:"GET",
+            url: "/city" + id,
+            success: function (city){
+                let content = `<table>
+                    <tr>
+                        <th class="details-left">Tên thành phố</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th class="details-left">Quốc Gia</th>
+                        <td>${city.country.name}</td>
+                    </tr>
+                    <tr>
+                        <th class="details-left">Diện tích</th>
+                        <td>${city.acreage}</td>
+                    </tr>
+                    <tr>
+                        <th class="details-left">Dân số</th>
+                        <td>${city.population}</td>
+                    </tr>
+                    <tr>
+                        <th class="details-left">GDP</th>
+                        <td>${city.gdp}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">${city.introduce}</td>
+                    </tr>
+                </table>`
+            }
+        })
+    }
+</script>
+<body>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog" style="z-index: 1">
+        <!-- Modal content-->
+        <div class="modal-content" style="margin-top: 150px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" style="margin-left: 225px">Thêm Mới</h4>
+            </div>
+            <div class="modal-body" id="content">
+                <table>
+                    <tr>
+                        <th class="details-left">Tên thành phố</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th class="details-left">Quốc Gia</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th class="details-left">Diện tích</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th class="details-left">Dân số</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th class="details-left">GDP</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"></td>
+                    </tr>
+                </table>
+            </div>
+            <button type="button" class="btn btn-default"  data-dismiss="modal" >Close</button>
+        </div>
+    </div>
+</div>
+<div id="wrapper">
+    <!-- Menu left -->
+    <nav th:replace="master::admin-menuleft"></nav>
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row">
+            <!-- Navbar top -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="javascript:void(0);"><i class="fa fa-navicon"></i></a>
+                </div>
+            </nav>
+            <!--./ end navbar top -->
+        </div>
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <div class="col-xs-12 pl-5">
+                                <ol class="breadcrumb">
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-home"></i>Trang chủ
+                                        </a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="#">
+                                            <strong></strong>
+                                        </a>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="panel panel-default border-square">
+                                        <div class="panel-heading border-square">
+                                            <div class="row">.
+                                                <div class="col-sm-2">
+                                                    <h3 class="pt-5"></h3>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <!-- tìm kiếm -->
+                                                    <div class="row">
+                                                        <form method="GET">
+                                                            <div style="width: 1000px; margin-left:300px";>
+                                                                <div style="float: left;">
+                                                                    <input type="text" name="name" id="name" class="form-control" value="" placeholder="Nhập từ khóa...">
+                                                                </div>
+                                                                <div style="padding: 0; margin: 0;float: left;">
+                                                                    <button id="button1"  class="btn btn-warning" type="submit" style="padding: 6px 35px;"><i class="fa fa-search"></i></button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <!-- tìm kiếm -->
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <a href="/create" class="btn btn-primary" style="margin-left: -30px;">
+                                                        <i class="fa fa-plus-square fa-fw" ></i>Thêm mới
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- thông báo -->
+                                        <div class="alert alert-info" id="time" style='display:none'>
+                                            <!-- thông báo -->
+                                            <div class="panel-body">
+                                            </div>
+                                            <div style="float: right;"></div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th style="text-align: center">#</th>
+                                                    <th style="text-align: center">Tên Thành Phố</th>
+                                                    <th style="text-align: center">Quốc Gia</th>
+                                                    <th style="text-align: center">Thao tác</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <th:block th:each="cities,rowStat : ${cities}">
+                                                    <tr>
+                                                        <th style="text-align: center;" th:text="${rowStat.index + 1 }"></th>
+                                                        <td style="text-align: center" th:text="${cities.name}"></td>
+                                                        <td style="text-align: center" th:text="${cities.country.name}"></td>
+                                                        <td style="text-align: center">
+                                                            <a class="btn" th:href="@{/update/__${cities.id}__}">
+                                                                <i class="glyphicon glyphicon-edit"></i> Sửa
+                                                            </a>
+                                                            <a onclick="return confirm('Are you sure?')" th:href="@{/delete/__${cities.id}__}">
+                                                                <i class="glyphicon glyphicon-trash"></i> Xóa
+                                                            </a>
+                                                            <i class="glyphicon glyphicon-zoom-in" style="margin-left: 5px; color: #337ab7"></i>
+                                                            <button type="button" style="border: none; padding: 0; padding: 0; background-color: white; color: #337ab7" th:href="${cities.id}" onclick="details(this)" data-toggle="modal" data-target="#myModal">Xem</button>
+                                                        </td>
+                                                    </tr>
+                                                </th:block>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="text-center">
+                <strong>Copyright</strong> SHI-V Company &copy; 2018
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="master::admin-jslink"></th:block>
+</body>
+</html>
