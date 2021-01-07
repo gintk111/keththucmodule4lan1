@@ -1,48 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="master::admin-head"></th:block>
-<style>
-    .details-left {
-        width: 25%;
-    }
-</style>
-<script>
-    function details(e) {
-        let id = e.getAttribute("href");
-        $.ajax({
-            type:"GET",
-            url: "/city/" + id,
-            success: function (city){
-                let content = `<table>
-                    <tr>
-                        <th class="details-left">Tên thành phố:</th>
-                        <td>${city.name}</td>
-                    </tr>
-                    <tr>
-                        <th class="details-left">Quốc Gia:</th>
-                        <td>${city.country.name}</td>
-                    </tr>
-                    <tr>
-                        <th class="details-left">Diện tích:</th>
-                        <td>${city.acreage}</td>
-                    </tr>
-                    <tr>
-                        <th class="details-left">Dân số:</th>
-                        <td>${city.population}</td>
-                    </tr>
-                    <tr>
-                        <th class="details-left">GDP:</th>
-                        <td>${city.gdp}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">${city.introduce}</td>
-                    </tr>
-                </table>`;
-                document.getElementById('content-table-details').innerHTML = content;
-            }
-        })
-    }
-</script>
 <body>
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog" style="z-index: 1">
@@ -50,7 +8,7 @@
         <div class="modal-content" style="margin-top: 150px;">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" style="margin-left: 225px">Thêm Mới</h4>
+                <h4 class="modal-title" style="margin-left: 225px">Chi tiết</h4>
             </div>
             <div class="modal-body" id="content-table-details">
             </div>
@@ -141,23 +99,20 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <th:block th:each="cities,rowStat : ${cities}">
                                                     <tr>
-                                                        <th style="text-align: center;" th:text="${rowStat.index + 1 }"></th>
-                                                        <td style="text-align: center" th:text="${cities.name}"></td>
-                                                        <td style="text-align: center" th:text="${cities.country.name}"></td>
+                                                        <th style="text-align: center"></th>
+                                                        <td style="text-align: center"></td>
+                                                        <td style="text-align: center"></td>
                                                         <td style="text-align: center">
-                                                            <a class="btn" th:href="@{/update/__${cities.id}__}">
+                                                            <a>
                                                                 <i class="glyphicon glyphicon-edit"></i> Sửa
                                                             </a>
-                                                            <a onclick="return confirm('Are you sure?')" th:href="@{/delete/__${cities.id}__}">
+                                                            <a>
                                                                 <i class="glyphicon glyphicon-trash"></i> Xóa
                                                             </a>
                                                             <i class="glyphicon glyphicon-zoom-in" style="margin-left: 5px; color: #337ab7"></i>
-                                                            <button type="button" style="border: none; padding: 0; padding: 0; background-color: white; color: #337ab7" th:href="${cities.id}" onclick="details(this)" data-toggle="modal" data-target="#myModal">Xem</button>
                                                         </td>
                                                     </tr>
-                                                </th:block>
                                                 </tbody>
                                             </table>
                                         </div>

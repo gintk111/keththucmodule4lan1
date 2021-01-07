@@ -81,7 +81,7 @@ public class CityController {
     }
 
     @GetMapping("/city/{id}")
-    public ResponseEntity<City> getProvince(@PathVariable Long id){
+    public ResponseEntity<City> getCity(@PathVariable Long id){
         return new ResponseEntity(cityService.findById(id).get(), HttpStatus.OK);
     }
 }
